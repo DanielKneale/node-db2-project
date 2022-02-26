@@ -17,14 +17,11 @@ module.exports = {
       .first();
   }
 
-  function create(car) {
-    return db('cars')
-      .insert(car)
-      .then(ids => {
-        return getById(ids[0]);
-      });
+  async function create(car){
+    const [vin] = await db("cars").insert(car)
+    return getById(vin)
   }
 
-  function getByVin(vin) {
+  function getByVin(vin){
     return db("cars").where("vin",vin).first()
   }
